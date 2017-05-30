@@ -11,10 +11,12 @@ import { PhonesDetailsComponent } from './phones-details/phones-details.componen
 import { HomeComponent } from './home/home.component';
 import { CounterService } from './counter.service';
 import { PhonesService } from './phones.service';
+import { AddPhoneComponent } from './add-phone/add-phone.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'phones',  component: PhonesListComponent },
+  { path: 'phones/new',  component: AddPhoneComponent },
   { path: 'phones/:id', component: PhonesDetailsComponent }
 ];
 
@@ -24,7 +26,8 @@ const routes: Routes = [
     NavbarComponent,
     PhonesListComponent,
     PhonesDetailsComponent,
-    HomeComponent
+    HomeComponent,
+    AddPhoneComponent
   ],
   imports: [
     BrowserModule,

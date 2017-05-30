@@ -1,14 +1,16 @@
 <div class="col-md-3" *ngFor="let phone of phones">
 		<div class="thumbnail" >
-	    <img [src]="phone.image">
-	      <div class="caption">
-	        <h4>{{ phone.name }}</h4>
-	        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-	        <div>
-						<span class="label label-default" *ngFor="let spec of phone.specs">{{ spec }}</span>
-					</div>
-	        <a [routerLink]="['/phones', phone._id]" class="btn btn-default btn-sm pull-right" role="button"><i class="glyphicon glyphicon-zoom-in"></i> Details</a> 
-	        <div class="clearfix"></div>
+			
+				<img [src]="phone.image">	
+			
+      <div class="caption">
+        <h4>{{ phone.name }}</h4>
+        <div class="labels">
+					<span class="label label-primary" *ngFor="let spec of phone.specs">{{ spec }}</span>
+				</div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+        
+        <a [routerLink]="['/phones', phone._id]" class="btn btn-default btn-md btn-block" role="button"><i class="glyphicon glyphicon-zoom-in"></i> Details</a> 
 	    </div>
 	  </div>
 </div>

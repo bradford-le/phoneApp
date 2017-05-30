@@ -1,0 +1,7 @@
+.labels{
+	margin-bottom: 10px;
+}
+
+.labels > span {
+	margin-right: 5px;
+}

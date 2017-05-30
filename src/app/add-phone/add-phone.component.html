@@ -25,11 +25,9 @@
 					    <label for="image">Spec</label>
 					    <input type="text" class="form-control" id="image" placeholder="Spec" [(ngModel)]="spec" name="spec">
 					  </div>
-					  <button type="submit" class="btn btn-default">Edit</button>
-					  <button class="btn btn-default" (click)="addSpec()">Add Spec</button>
+					  <button type="submit" class="btn btn-default">Add</button>
 					</form>
-					
-					<button class="btn btn-default" (click)="delete()">Delete</button>
+					<button class="btn btn-default" (click)="addSpec()">Add Spec</button>
 					<span class="label label-default" *ngFor="let spec of phone.specs">{{ spec }}</span>
 				</div>
 	    </div>
