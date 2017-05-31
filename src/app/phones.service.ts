@@ -1,34 +1,48 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { SessionService } from './session.service'
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class PhonesService {
 
-  constructor( private http: Http ) { }
+  constructor( 
+  	private http: Http,
+  	private session: SessionService
+   ) { }
 
   getList() {
-  	return this.http.get('http://localhost:3000/api/phones')
+  	let headers = new Headers({ 'Authorization': 'JWT ' + this.session.token });
+  	let options = new RequestOptions({ headers: headers });
+  	return this.http.get('http://localhost:3000/api/phones', options)
   		.map( (res) => res.json() )
   }
 
   get(id) {
-  	return this.http.get(`http://localhost:3000/api/phones/${id}`)
+  	let headers = new Headers({ 'Authorization': 'JWT ' + this.session.token });
+  	let options = new RequestOptions({ headers: headers });
+  	return this.http.get(`http://localhost:3000/api/phones/${id}`, options)
   		.map((res) => res.json() );
   }
 
   add(phone) {
-  	return this.http.post('http://localhost:3000/api/phones', phone)
+  	let headers = new Headers({ 'Authorization': 'JWT ' + this.session.token });
+  	let options = new RequestOptions({ headers: headers });
+  	return this.http.post('http://localhost:3000/api/phones', phone, options)
   		.map((res) => res.json())
   }
 
   edit(phone) {
-  	return this.http.put(`http://localhost:3000/api/phones/${phone._id}`, phone)
+  	let headers = new Headers({ 'Authorization': 'JWT ' + this.session.token });
+  	let options = new RequestOptions({ headers: headers });
+  	return this.http.put(`http://localhost:3000/api/phones/${phone._id}`, phone, options)
   		.map( (res) => res.json());
   }
 
   remove(id) {
-  	return this.http.delete(`http://localhost:3000/api/phones/${id}`)
+  	let headers = new Headers({ 'Authorization': 'JWT ' + this.session.token });
+  	let options = new RequestOptions({ headers: headers });
+  	return this.http.delete(`http://localhost:3000/api/phones/${id}`, options)
   		.map( (res) => res.json());
   }
 
