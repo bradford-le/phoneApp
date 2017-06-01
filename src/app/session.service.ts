@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class SessionService implements CanActivate {
@@ -16,42 +17,29 @@ export class SessionService implements CanActivate {
   	private router: Router
   ) { }
 
-  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate() {
   	if (localStorage.getItem('token')) {
-  		// this.session.isAuth = true;
-  		// this.session.user = JSON.parse(localStorage.getItem('user'))
-  		console.log('canActivate token ', localStorage.getItem('token'))
   		let headers = new Headers({ 'Authorization': 'JWT ' + localStorage.getItem('token') });
   		let options = new RequestOptions({ headers: headers });
   		return this.http.get(`${this.BASE_URL}/token`, options)
-  			.map((data) => {
-  				if (data) {
-  					console.log('canActivate data: ', data);
-  					this.isAuth = true;
-  					this.token = localStorage.getItem('token');
-  					// return true;
-  					return true;
-  				}
-  				this.logout()
+  			.toPromise()
+  			.then((res) => res.json())
+  			.then((data) => { 
+  				this.isAuth = true;
+  				this.user = JSON.parse(localStorage.getItem('user'))
+  				this.token = localStorage.getItem('token');
+  				return true
+  			})
+  			.catch((err) => { 
+  				this.logout();
   				this.router.navigate(['/login']);
-  				return false
-  			});
+  				return false;
+  			})
   	}else{
-  		this.isAuth = false;
+  		this.logout();
   		this.router.navigate(['/login']);
   		return false
   	}
-    // if (this.isAuth) {
-    //   // logged in so return true\
-    //   // this.token = localStorage.getItem('token');
-    //   // this.user = JSON.parse(localStorage.getItem('user'));
-    //   // this.isAuth = true;
-    //   return true;
-    // }
-    // // not logged in so redirect to login page
-    // this.router.navigate(['/login']);
-    // // this.isAuth = false;
-    // return false;
   }
 
   login(user) {
@@ -68,8 +56,6 @@ export class SessionService implements CanActivate {
         	  	_id: user._id,
         	  	username: user.username
         	  }
-        	  console.log('token: ', token);
-        	  console.log('user: ', this.user);
 
         	  this.isAuth = true;
         	  // store username and jwt token in local storage to keep user logged in between page refreshes
@@ -82,7 +68,6 @@ export class SessionService implements CanActivate {
         	  return false;
         	}
         })
-        
   }
 
   isTokenValid(token){
